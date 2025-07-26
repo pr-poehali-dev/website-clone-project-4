@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miro - Место для командной работы</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        .header {
+            border-bottom: 1px solid #e5e7eb;
+            padding: 16px 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        .nav {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #6b7280;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: #1f2937;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: #6b7280;
+        }
+
+        .btn-ghost:hover {
+            color: #1f2937;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            background: linear-gradient(to bottom, #dbeafe, #ffffff);
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 64px;
+            font-weight: bold;
+            color: #1f2937;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .hero-text .highlight {
+            color: #2563eb;
+        }
+
+        .hero-text p {
+            font-size: 20px;
+            color: #6b7280;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 24px;
+            margin-top: 24px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .hero-visual {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mockup-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .mockup-item {
+            height: 32px;
+            border-radius: 4px;
+        }
+
+        .mockup-yellow { background: #fef3c7; }
+        .mockup-blue { background: #dbeafe; }
+        .mockup-purple { background: #e0e7ff; }
+        .mockup-green { background: #d1fae5; }
+
+        .board-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .board-card {
+            padding: 8px;
+            border-radius: 6px;
+            min-height: 60px;
+        }
+
+        .board-orange {
+            background: #fed7aa;
+            border-left: 4px solid #ea580c;
+        }
+
+        .board-pink {
+            background: #fce7f3;
+        }
+
+        .board-blue {
+            background: #dbeafe;
+        }
+
+        .board-green {
+            background: #d1fae5;
+        }
+
+        .board-purple {
+            background: #e0e7ff;
+        }
+
+        .board-line {
+            height: 8px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            margin: 4px 0;
+        }
+
+        /* Sections */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-orange {
+            background: #fff7ed;
+        }
+
+        .section-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .image-placeholder {
+            height: 192px;
+            background: #f3f4f6;
+            border-radius: 8px;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 48px;
+        }
+
+        .team-card {
+            background: white;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 192px;
+        }
+
+        .team-avatars {
+            display: flex;
+            margin-left: -8px;
+            margin-bottom: 8px;
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .avatar-blue { background: #3b82f6; }
+        .avatar-green { background: #10b981; }
+        .avatar-orange { background: #f97316; }
+
+        .section h2 {
+            font-size: 48px;
+            font-weight: bold;
+            color: #1f2937;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+
+        .section p {
+            font-size: 18px;
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        /* Third Section */
+        .visual-grid {
+            background: linear-gradient(135deg, #dbeafe, #e0e7ff);
+            border-radius: 12px;
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .grid-items {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .grid-item {
+            height: 64px;
+            border-radius: 8px;
+        }
+
+        .grid-orange { background: #fed7aa; }
+        .grid-blue { background: #dbeafe; }
+        .grid-green { background: #d1fae5; }
+        .grid-purple { background: #e0e7ff; }
+        .grid-pink { background: #fce7f3; }
+        .grid-gray { background: #f3f4f6; }
+
+        .floating-element {
+            position: absolute;
+        }
+
+        .float-yellow {
+            top: 16px;
+            right: 16px;
+            width: 24px;
+            height: 24px;
+            background: #fbbf24;
+            border-radius: 50%;
+            animation: bounce 2s infinite;
+        }
+
+        .float-blue {
+            bottom: 16px;
+            left: 16px;
+            width: 16px;
+            height: 16px;
+            background: #3b82f6;
+            transform: rotate(45deg);
+        }
+
+        .float-purple {
+            top: 50%;
+            left: 50%;
+            width: 32px;
+            height: 32px;
+            border: 2px solid #8b5cf6;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Features Section */
+        .section-gray {
+            background: #f9fafb;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 32px;
+            margin-bottom: 48px;
+        }
+
+        .feature-item {
+            text-align: center;
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 24px;
+        }
+
+        .feature-item p {
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .banner {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .banner-content {
+            height: 256px;
+            background: linear-gradient(90deg, #dbeafe, #e0e7ff, #fce7f3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .banner h3 {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .banner p {
+            color: #6b7280;
+        }
+
+        /* Team Types */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .team-type {
+            text-align: center;
+            padding: 16px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .team-type:hover {
+            background: #f9fafb;
+        }
+
+        .team-type h4 {
+            font-size: 18px;
+            font-weight: 500;
+            color: #1f2937;
+        }
+
+        .templates-section {
+            background: linear-gradient(90deg, #fed7aa, #fce7f3);
+            border-radius: 12px;
+            padding: 32px;
+        }
+
+        .templates-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .templates-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .template-card {
+            background: white;
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .template-preview {
+            height: 80px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+        }
+
+        .template-blue { background: #dbeafe; }
+        .template-green { background: #d1fae5; }
+
+        .template-card p {
+            font-size: 14px;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        /* Footer */
+        .footer {
+            background: #111827;
+            color: white;
+            padding: 48px 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+        }
+
+        .footer-brand h3 {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .footer-brand p {
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
+        .footer-column h4 {
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 8px;
+        }
+
+        .footer-column a {
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content,
+            .section-content,
+            .templates-content {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .hero-text h1 {
+                font-size: 48px;
+            }
+
+            .section h2 {
+                font-size: 36px;
+            }
+
+            .features-grid,
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div style="display: flex; align-items: center; gap: 32px;">
+                    <div class="logo">miro</div>
+                    <nav class="nav">
+                        <a href="#">Продукт</a>
+                        <a href="#">Решения</a>
+                        <a href="#">Ресурсы</a>
+                        <a href="#">Сообщество</a>
+                        <a href="#">Тарифы</a>
+                    </nav>
+                </div>
+                <div class="header-actions">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" style="color: #9ca3af;">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="21 21l-4.35-4.35"></path>
+                    </svg>
+                    <a href="#" class="btn btn-ghost">Войти</a>
+                    <a href="#" class="btn btn-primary">Бесплатно навсегда</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>
+                        Место для<br>
+                        <span class="highlight">командной</span><br>
+                        работы
+                    </h1>
+                    <p>
+                        Miro помогает командам работать более эффективно — 
+                        от мозгового штурма и планирования до исследований и дизайна.
+                    </p>
+                    <a href="#" class="btn btn-primary" style="font-size: 18px; padding: 16px 32px;">
+                        Начать бесплатно
+                    </a>
+                    <div class="hero-stats">
+                        <span>45M+ пользователей</span>
+                        <span>•</span>
+                        <span>200K+ команд</span>
+                        <span>•</span>
+                        <span style="display: flex; align-items: center; gap: 4px;">
+                            ⭐ Trusted
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="hero-visual">
+                    <div class="mockup-grid">
+                        <div class="mockup-item mockup-yellow"></div>
+                        <div class="mockup-item mockup-blue"></div>
+                        <div class="mockup-item mockup-purple"></div>
+                        <div class="mockup-item mockup-green"></div>
+                    </div>
+                    <div class="board-grid">
+                        <div>
+                            <div class="board-card board-orange">
+                                <div class="board-line" style="width: 75%; background: #ea580c;"></div>
+                                <div class="board-line" style="width: 50%; background: #ea580c;"></div>
+                            </div>
+                            <div class="board-card board-pink" style="height: 48px; margin-top: 8px;">
+                                <div class="board-line" style="width: 66%; background: #ec4899;"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="board-card board-blue" style="height: 80px;">
+                                <div class="board-line" style="width: 100%; background: #3b82f6;"></div>
+                                <div class="board-line" style="width: 75%; background: #3b82f6;"></div>
+                                <div class="board-line" style="width: 50%; background: #3b82f6;"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="board-card board-green" style="height: 56px;">
+                                <div class="board-line" style="width: 66%; background: #10b981;"></div>
+                                <div class="board-line" style="width: 33%; background: #10b981;"></div>
+                            </div>
+                            <div class="board-card board-purple" style="height: 40px; margin-top: 8px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Second Section -->
+    <section class="section section-orange">
+        <div class="container">
+            <div class="section-content">
+                <div class="image-grid">
+                    <div class="image-placeholder"></div>
+                    <div class="image-placeholder"></div>
+                    <div class="image-placeholder"></div>
+                    <div class="team-card">
+                        <div style="text-align: center;">
+                            <div class="team-avatars" style="justify-content: center;">
+                                <div class="avatar avatar-blue"></div>
+                                <div class="avatar avatar-green"></div>
+                                <div class="avatar avatar-orange"></div>
+                            </div>
+                            <p style="font-weight: 500; margin: 0;">+50 участников</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h2>
+                        Работайте вместе,<br>
+                        где бы вы ни<br>
+                        находились
+                    </h2>
+                    <p>
+                        Miro дает всем — от начинающих до профессионалов — 
+                        возможность участвовать в работе команды, делиться 
+                        идеями и строить будущее вместе, где бы они ни находились.
+                    </p>
+                    <a href="#" class="btn btn-primary">Узнать больше</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Third Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-content">
+                <div>
+                    <h2>
+                        Закройте лишние<br>
+                        вкладки — всё<br>
+                        уже здесь
+                    </h2>
+                    <p>
+                        Miro объединяет все ваши инструменты для совместной работы 
+                        в одном месте, так что команды могут оставаться на связи 
+                        независимо от расстояния.
+                    </p>
+                    <a href="#" class="btn btn-primary">Узнать больше</a>
+                </div>
+                
+                <div class="visual-grid">
+                    <div class="grid-items">
+                        <div class="grid-item grid-orange"></div>
+                        <div class="grid-item grid-gray"></div>
+                        <div class="grid-item grid-blue"></div>
+                        <div class="grid-item grid-gray"></div>
+                        <div class="grid-item grid-green"></div>
+                        <div class="grid-item grid-gray"></div>
+                        <div class="grid-item grid-purple"></div>
+                        <div class="grid-item grid-gray"></div>
+                        <div class="grid-item grid-pink"></div>
+                    </div>
+                    <div class="floating-element float-yellow"></div>
+                    <div class="floating-element float-blue"></div>
+                    <div class="floating-element float-purple"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section section-gray">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 64px;">
+                <h2>Подходит для вашего стиля работы</h2>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">💡</div>
+                    <p>Мозговой штурм</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📊</div>
+                    <p>Диаграммы</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📅</div>
+                    <p>Планирование</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔍</div>
+                    <p>Исследования</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🎨</div>
+                    <p>Дизайн-мышление</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🎯</div>
+                    <p>Стратегическое планирование</p>
+                </div>
+            </div>
+
+            <div class="banner">
+                <div class="banner-content">
+                    <div>
+                        <h3>Miro для команд</h3>
+                        <p>Визуализируйте, планируйте и создавайте вместе</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Types Section -->
+    <section class="section">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 64px;">
+                <h2>Создан для всех типов команд</h2>
+            </div>
+
+            <div class="team-grid">
+                <div class="team-type">
+                    <h4>Agile-команды</h4>
+                </div>
+                <div class="team-type">
+                    <h4>Дизайнеры</h4>
+                </div>
+                <div class="team-type">
+                    <h4>Продакт</h4>
+                </div>
+                <div class="team-type">
+                    <h4>UX/UI</h4>
+                </div>
+                <div class="team-type">
+                    <h4>Консалтинг</h4>
+                </div>
+                <div class="team-type">
+                    <h4>Маркетинг</h4>
+                </div>
+            </div>
+
+            <div class="templates-section">
+                <div class="templates-content">
+                    <div>
+                        <h3 style="font-size: 32px; font-weight: bold; color: #1f2937; margin-bottom: 16px;">
+                            Начните с шаблонов
+                        </h3>
+                        <p style="color: #6b7280; margin-bottom: 24px;">
+                            Выберите из 300+ готовых шаблонов для быстрого старта 
+                            или создайте доску с нуля.
+                        </p>
+                        <a href="#" class="btn btn-primary">Посмотреть шаблоны</a>
+                    </div>
+                    <div class="templates-grid">
+                        <div class="template-card">
+                            <div class="template-preview template-blue"></div>
+                            <p>Kanban Board</p>
+                        </div>
+                        <div class="template-card">
+                            <div class="template-preview template-green"></div>
+                            <p>Mind Map</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>miro</h3>
+                    <p>Визуальная платформа для инноваций</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Продукт</h4>
+                    <ul>
+                        <li><a href="#">Возможности</a></li>
+                        <li><a href="#">Безопасность</a></li>
+                        <li><a href="#">Enterprise</a></li>
+                        <li><a href="#">Customer stories</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Решения</h4>
+                    <ul>
+                        <li><a href="#">Brainstorming</a></li>
+                        <li><a href="#">Diagramming</a></li>
+                        <li><a href="#">Meetings</a></li>
+                        <li><a href="#">Scrum events</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Ресурсы</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Miro Academy</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Developers</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
