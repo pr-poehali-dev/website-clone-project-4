@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новостной сайт</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            gap: 20px;
+        }
+
+        /* Header */
+        .header {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .logo, .search-bar, .phone {
+            background: white;
+            border: 3px solid #000;
+            padding: 15px 25px;
+            font-weight: 600;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-bar {
+            background: #f8f9fa;
+        }
+
+        .search-bar input {
+            border: none;
+            background: none;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            text-align: center;
+            outline: none;
+        }
+
+        .search-bar input::placeholder {
+            color: #333;
+            font-weight: 600;
+        }
+
+        /* Menu */
+        .menu {
+            background: white;
+            border: 3px solid #000;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            display: grid;
+            gap: 20px;
+        }
+
+        /* Header Image */
+        .header-image {
+            background: #e9ecef;
+            border: 3px solid #000;
+            padding: 60px 20px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 18px;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+        }
+
+        .sidebar {
+            background: white;
+            border: 3px solid #000;
+            padding: 30px 20px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+        }
+
+        .main-content-area {
+            background: #e9ecef;
+            border: 3px solid #000;
+            padding: 60px 20px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 18px;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Footer */
+        .footer {
+            background: #e9ecef;
+            border: 3px solid #000;
+            padding: 40px 20px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .container {
+                padding: 15px;
+                gap: 15px;
+            }
+
+            .logo, .search-bar, .phone, .menu {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+
+            .header-image, .main-content-area {
+                padding: 40px 15px;
+                font-size: 16px;
+                min-height: 150px;
+            }
+
+            .sidebar {
+                padding: 25px 15px;
+                min-height: 200px;
+            }
+
+            .footer {
+                padding: 30px 15px;
+            }
+        }
+
+        /* Hover Effects */
+        .logo:hover, .phone:hover, .menu:hover {
+            background: #f8f9fa;
+            cursor: pointer;
+        }
+
+        .search-bar:hover {
+            background: #fff;
+        }
+
+        .sidebar:hover, .main-content-area:hover, .footer:hover {
+            background: #dee2e6;
+        }
+
+        .header-image:hover {
+            background: #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">Лого</div>
+            <div class="search-bar">
+                <input type="text" placeholder="Строка поиска">
+            </div>
+            <div class="phone">Телефон</div>
+        </div>
+
+        <!-- Menu -->
+        <div class="menu">Меню</div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header Image -->
+            <div class="header-image">Шапка</div>
+
+            <!-- Content Grid -->
+            <div class="content-grid">
+                <div class="sidebar">
+                    Категории<br>
+                    +<br>
+                    Новости
+                </div>
+                <div class="main-content-area">Содержимое страницы</div>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">Подвал</div>
+        </div>
+    </div>
+</body>
+</html>
